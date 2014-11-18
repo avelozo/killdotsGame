@@ -56,7 +56,7 @@ class MainActivity extends Activity with TypedActivity {
   }
 
   override def onCreateOptionsMenu(menu: Menu) = {
-    getMenuInflater().inflate(R.menu.simple_menu, menu)
+    getMenuInflater.inflate(R.menu.simple_menu, menu)
     true
   }
 
@@ -68,7 +68,7 @@ class MainActivity extends Activity with TypedActivity {
   override def onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) =
     menu.add(Menu.NONE, 1, Menu.NONE, "Clear").setAlphabeticShortcut('x') // TODO externalize strings
 
-  override def onContextItemSelected(item: MenuItem) = item.getItemId() match {
+  override def onContextItemSelected(item: MenuItem) = item.getItemId match {
     case 1 => dotModel.clearDots() ; true
     case _ => false
   }
@@ -82,7 +82,7 @@ class MainActivity extends Activity with TypedActivity {
 
     dotView.setOnKeyListener(new OnKeyListener {
       override def onKey(v: View, keyCode: Int, event: KeyEvent): Boolean = {
-        if (KeyEvent.ACTION_DOWN == event.getAction())
+        if (KeyEvent.ACTION_DOWN == event.getAction)
           keyCode match {
             case KeyEvent.KEYCODE_SPACE => makeDot(dotModel, dotView, Color.MAGENTA); true
             case KeyEvent.KEYCODE_ENTER => makeDot(dotModel, dotView, Color.BLUE); true
@@ -94,14 +94,14 @@ class MainActivity extends Activity with TypedActivity {
     })
 
     // wire up the controller
-    findView(TR.button1).setOnClickListener(new View.OnClickListener() {
+    findView(TR.button1).setOnClickListener(new View.OnClickListener {
       override def onClick(v: View) = makeDot(dotModel, dotView, Color.RED)
     })
-    findView(TR.button2).setOnClickListener(new View.OnClickListener() {
+    findView(TR.button2).setOnClickListener(new View.OnClickListener {
       override def onClick(v: View) = makeDot(dotModel, dotView, Color.GREEN)
     })
 
-    dotModel.setDotsChangeListener(new Dots.DotsChangeListener() {
+    dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
       def onDotsChange(dots: Dots) = {
         val d = dots.getLastDot
         findView(TR.text1).setText(if (null == d) "" else d.x.toString)
@@ -166,12 +166,13 @@ class MainActivity extends Activity with TypedActivity {
   class DotGenerator(dots: Dots, view: DotView, color: Int)
     extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
+    override protected def onProgressUpdate(values: AnyRef*) =
+      makeDot(dots, view, color) // this method runs on the UI thread!
+
     override protected def doInBackground(params: AnyRef*): AnyRef = {
-      while (! isCancelled()) {
+      while (! isCancelled) {
         Log.d(TAG, "dot generator scheduling dot creation of color " + color)
-        runOnUiThread(new Runnable {
-          override def run() = makeDot(dots, view, color)
-        })
+        publishProgress(null)
         try { Thread.sleep(DELAY) } catch { case _: InterruptedException => return null }
       }
       null

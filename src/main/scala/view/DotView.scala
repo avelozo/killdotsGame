@@ -53,8 +53,7 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
     if (null == dots) return
 
     paint.setStyle(Style.FILL)
-    for (dot <- dots.getDots)
-    {
+    for (dot <- dots.getDots) {
       paint.setColor(dot.color)
       canvas.drawCircle(dot.x, dot.y, dot.diameter, paint)
     }
