@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.hello.uidemo
+package edu.luc.etl.cs313.scala.uidemo
 package view
 
 import android.content.Context
@@ -22,6 +22,7 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
 
   { setFocusableInTouchMode(true) }
 
+  /** The model underlying this view. */
   private var dots: Dots = _
 
   /** @param context the rest of the application */
@@ -39,7 +40,11 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
     setFocusableInTouchMode(true)
   }
 
-  /** @param dots */
+  /**
+   * Injects the model underlying this view.
+   *
+   * @param dots
+   * */
   def setDots(dots: Dots): Unit = this.dots = dots
 
   /** @see android.view.View#onDraw(android.graphics.Canvas) */

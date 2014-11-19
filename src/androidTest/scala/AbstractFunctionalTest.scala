@@ -1,5 +1,4 @@
-package edu.luc.etl.cs313.scala.hello
-package ui
+package edu.luc.etl.cs313.scala.uidemo
 
 import org.junit.Assert._
 import org.junit.Test

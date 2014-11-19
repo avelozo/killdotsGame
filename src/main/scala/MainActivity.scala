@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.hello.uidemo
+package edu.luc.etl.cs313.scala.uidemo
 
 import android.app.Activity
 import android.graphics.Color
@@ -20,7 +20,7 @@ import scala.util.Random
 /** Android UI demo program */
 class MainActivity extends Activity with TypedActivity {
 
-  val TAG = "edu.luc.etl.cs313.scala.hello.uidemo"
+  val TAG = "edu.luc.etl.cs313.scala.uidemo"
 
   /** Dot diameter */
   val DOT_DIAMETER = 6

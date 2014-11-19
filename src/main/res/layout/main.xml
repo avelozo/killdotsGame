@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:baselineAligned="false">
 
-  <edu.luc.etl.cs313.scala.hello.uidemo.view.DotView
+  <edu.luc.etl.cs313.scala.uidemo.view.DotView
         android:id="@+id/dots"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.scala.hello.uidemo.model
+package edu.luc.etl.cs313.scala.uidemo.model
 
 import scala.collection.mutable.ListBuffer
 
