@@ -23,7 +23,7 @@ class MainActivity extends Activity with TypedActivity {
   def dotView = findView(TR.dots)
 
   /** The dot generator */
-  var dotGenerator: _root_.controller.DotGenerator = _
+  var dotGenerator: DotGenerator = _
 
   override def onCreate(state: Bundle) = {
     super.onCreate(state)
@@ -34,7 +34,7 @@ class MainActivity extends Activity with TypedActivity {
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new _root_.controller.DotGenerator(dotModel, dotView, Color.BLACK)
+    dotGenerator = new DotGenerator(dotModel, dotView, Color.BLACK)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
   }
 
