@@ -3,8 +3,7 @@ package edu.luc.etl.cs313.scala.uidemo
 import android.app.Activity
 import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
-import android.view.ContextMenu.ContextMenuInfo
-import android.view.{ContextMenu, Menu, MenuItem, View}
+import android.view.{Menu, MenuItem}
 
 import model._
 import controller._
@@ -14,13 +13,15 @@ object MainActivity {
 }
 
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
-class MainActivity extends Activity with TypedActivity {
+class MainActivity extends Activity with TypedActivity with Controller {
+
+  lazy val activity = this // required by Controller mixin
 
   /** The application model */
-  final val dotModel = new Dots
+  override val dotModel = new Dots
 
   /** The application view */
-  def dotView = findView(TR.dots)
+  override def dotView = findView(TR.dots)
 
   /** The dot generator */
   var dotGenerator: DotGenerator = _
@@ -29,12 +30,12 @@ class MainActivity extends Activity with TypedActivity {
     super.onCreate(state)
     setContentView(R.layout.main)
     dotView.setDots(dotModel)
-    new Controller { lazy val activity = MainActivity.this }
+    connectController()
   }
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new DotGenerator(dotModel, dotView, Color.BLACK)
+    dotGenerator = new DotGenerator(dotModel, this, Color.BLACK)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
   }
 
@@ -44,7 +45,8 @@ class MainActivity extends Activity with TypedActivity {
     super.onStop()
   }
 
-  // TODO should these methods be in the controller?
+  // These methods look like they should be in the Controller mixin,
+  // but onOptionsItemSelected needs to be here to use super.
 
   override def onCreateOptionsMenu(menu: Menu) = {
     getMenuInflater.inflate(R.menu.simple_menu, menu)
@@ -52,15 +54,7 @@ class MainActivity extends Activity with TypedActivity {
   }
 
   override def onOptionsItemSelected(item: MenuItem) = item.getItemId match {
-    case R.id.menu_clear => dotModel.clearDots(); true
+    case R.id.menu_clear => dotModel.clearDots() ; true
     case _ => super.onOptionsItemSelected(item)
-  }
-
-  override def onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) =
-    menu.add(Menu.NONE, 1, Menu.NONE, "Clear").setAlphabeticShortcut('x') // TODO externalize strings
-
-  override def onContextItemSelected(item: MenuItem) = item.getItemId match {
-    case 1 => dotModel.clearDots(); true
-    case _ => false
   }
 }

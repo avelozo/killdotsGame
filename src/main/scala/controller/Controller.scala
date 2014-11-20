@@ -5,47 +5,63 @@ import android.graphics.Color
 import android.view.View.OnKeyListener
 import android.view.{KeyEvent, View}
 
+import view.DotView
 import model.Dots
 
-/** Controller for Android UI demo program */
-trait Controller {
+import scala.util.Random
 
-  def activity: MainActivity
+/** Controller mixin for Android UI demo program */
+trait Controller extends TypedActivityHolder {
 
-  val dotView = activity.dotView
-  val dotModel = activity.dotModel
-  def findView[A](tr: TypedResource[A]): A = activity.findView(tr)
+  def dotView: DotView
+  val dotModel: Dots
 
-  dotView.setOnCreateContextMenuListener(activity)
-  dotView.setOnTouchListener(new TrackingTouchListener(dotModel))
+  def connectController(): Unit = {
+    dotView.setOnTouchListener(new TrackingTouchListener(dotModel))
 
-  dotView.setOnKeyListener(new OnKeyListener {
-    override def onKey(v: View, keyCode: Int, event: KeyEvent): Boolean = {
-      if (KeyEvent.ACTION_DOWN == event.getAction)
-        keyCode match {
-          case KeyEvent.KEYCODE_SPACE => dotView.makeDot(dotModel, dotView, Color.MAGENTA); true
-          case KeyEvent.KEYCODE_ENTER => dotView.makeDot(dotModel, dotView, Color.BLUE); true
-          case _ => false
-        }
-      else
-        false
-    }
-  })
+    dotView.setOnKeyListener(new OnKeyListener {
+      override def onKey(v: View, keyCode: Int, event: KeyEvent): Boolean = {
+        if (KeyEvent.ACTION_DOWN == event.getAction)
+          keyCode match {
+            case KeyEvent.KEYCODE_SPACE => makeDot(dotModel, Color.MAGENTA); true
+            case KeyEvent.KEYCODE_ENTER => makeDot(dotModel, Color.BLUE); true
+            case _ => false
+          }
+        else
+          false
+      }
+    })
 
-  // wire up the rest of the controller
-  findView(TR.button1).setOnClickListener(new View.OnClickListener {
-    override def onClick(v: View) = dotView.makeDot(dotModel, dotView, Color.RED)
-  })
-  findView(TR.button2).setOnClickListener(new View.OnClickListener {
-    override def onClick(v: View) = dotView.makeDot(dotModel, dotView, Color.GREEN)
-  })
+    findView(TR.button1).setOnClickListener(new View.OnClickListener {
+      override def onClick(v: View) = makeDot(dotModel, Color.RED)
+    })
+    findView(TR.button2).setOnClickListener(new View.OnClickListener {
+      override def onClick(v: View) = makeDot(dotModel, Color.GREEN)
+    })
 
-  dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
-    def onDotsChange(dots: Dots) = {
-      val d = dots.getLastDot
-      findView(TR.text1).setText(if (null == d) "" else d.x.toString)
-      findView(TR.text2).setText(if (null == d) "" else d.y.toString)
-      dotView.invalidate()
-    }
-  })
+    // This listener provides a tiny bit of mediation from model to view.
+    // Conceptually, it represents the dashed arrow (events) from model to view.
+    dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
+      def onDotsChange(dots: Dots) = {
+        val d = dots.getLastDot
+        findView(TR.text1).setText(if (null == d) "" else d.x.toString)
+        findView(TR.text2).setText(if (null == d) "" else d.y.toString)
+        dotView.invalidate()
+      }
+    })
+  }
+
+  /**
+   * @param dots the dots we're drawing
+   * @param color the color of the dot
+   */
+  def makeDot(dots: Dots, color: Int): Unit = {
+    import DotView.DOT_DIAMETER
+    val pad = (DOT_DIAMETER + 2) * 2
+    dots.addDot(
+      DOT_DIAMETER + (Random.nextFloat() * (dotView.getWidth - pad)),
+      DOT_DIAMETER + (Random.nextFloat() * (dotView.getHeight - pad)),
+      color,
+      DOT_DIAMETER)
+  }
 }

@@ -9,8 +9,6 @@ import android.view.View
 
 import model._
 
-import scala.util.Random
-
 object DotView {
   /** Dot diameter */
   val DOT_DIAMETER = 6 // TODO externalize
@@ -26,8 +24,6 @@ object DotView {
  * @author <a href="mailto:android@callmeike.net">Blake Meike</a>
  */
 class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View(context, attrs, defStyle) {
-
-  import DotView.DOT_DIAMETER
 
   { setFocusableInTouchMode(true) }
 
@@ -71,19 +67,5 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
       paint.setColor(dot.color)
       canvas.drawCircle(dot.x, dot.y, dot.diameter, paint)
     }
-  }
-
-  /**
-   * @param dots the dots we're drawing
-   * @param view the view in which we're drawing dots
-   * @param color the color of the dot
-   */
-  def makeDot(dots: Dots, view: DotView, color: Int): Unit = {
-    val pad = (DOT_DIAMETER + 2) * 2
-    dots.addDot(
-      DOT_DIAMETER + (Random.nextFloat() * (view.getWidth - pad)),
-      DOT_DIAMETER + (Random.nextFloat() * (view.getHeight - pad)),
-      color,
-      DOT_DIAMETER)
   }
 }
