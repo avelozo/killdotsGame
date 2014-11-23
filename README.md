@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/lucoodevcourse/uidemo-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/uidemo-android-scala)
+[![Build Status](https://travis-ci.org/lucoodevcourse/uidemo-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/uidemo-android-scala) 
+[![Coverage Status](https://img.shields.io/coveralls/lucoodevcourse/uidemo-android-scala.svg)](https://coveralls.io/r/lucoodevcourse/uidemo-android-scala) 
+[![Download](https://api.bintray.com/packages/lucoodevcourse/generic/uidemo-android-scala/images/download.svg) ](https://bintray.com/lucoodevcourse/generic/uidemo-android-scala/_latestVersion)
+
 # Overview
 
 This is a standalone Scala-based version of the Dots/DotView/TouchMe MVC Android UI Demo from
@@ -12,6 +15,7 @@ Please refer to the book chapter for detailed information on this example.
 
 * Mapping the model-view-controller (MVC) architecture to Android
 * Understanding the [difference between model-view-controller and model-view-adapter (MVA)](https://www.palantir.com/2009/04/model-view-adapter/)
+* Support for multiple view-controller pairs
 * Android application life cycle management
 * Defining custom view components in Android
 * Handling key presses and touch events 

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_clear"
-          android:title="@string/menuClear"
-          />
+    <item
+        android:id="@+id/menu_clear"
+        android:title="@string/menuClear"/>
 
-<!-- ICS
-          android:icon="@drawable/trashcan"
-          android:showAsAction="ifRoom|withText"
-          />
- -->
+    <item
+        android:id="@+id/menu_toggleView"
+        android:title="@string/menuToggleView"/>
 </menu>

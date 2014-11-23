@@ -5,4 +5,5 @@
     <string name="labelRed">Red</string>
     <string name="labelGreen">Green</string>
     <string name="menuClear">Clear</string>
+    <string name="menuToggleView">Toggle View</string>
 </resources>

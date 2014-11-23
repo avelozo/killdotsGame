@@ -9,14 +9,13 @@
     android:baselineAligned="false">
 
   <edu.luc.etl.cs313.scala.uidemo.view.DotView
-        android:id="@+id/dots"
-        android:focusableInTouchMode="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/white"
-        />
-    
+      android:id="@+id/dots"
+      android:focusableInTouchMode="true"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@color/white"/>
+
   <LinearLayout
       android:orientation="horizontal"
       android:background="@color/grey"

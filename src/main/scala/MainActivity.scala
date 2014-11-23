@@ -20,17 +20,13 @@ class MainActivity extends Activity with TypedActivity with Controller {
   /** The application model */
   override val dotModel = new Dots
 
-  /** The application view */
-  override def dotView = findView(TR.dots)
-
   /** The dot generator */
   var dotGenerator: DotGenerator = _
 
   override def onCreate(state: Bundle) = {
     super.onCreate(state)
     setContentView(R.layout.main)
-    dotView.setDots(dotModel)
-    connectController()
+    connectDotsView()
   }
 
   override def onStart() = {
@@ -45,6 +41,22 @@ class MainActivity extends Activity with TypedActivity with Controller {
     super.onStop()
   }
 
+  // TODO consider using State pattern
+
+  var isDotsView = true
+
+  def toggleView(): Unit = {
+    if (isDotsView) {
+      isDotsView = false
+      setContentView(R.layout.list)
+      connectListView()
+    } else {
+      isDotsView = true
+      setContentView(R.layout.main)
+      connectDotsView()
+    }
+  }
+
   // These methods look like they should be in the Controller mixin,
   // but onOptionsItemSelected needs to be here to use super.
 
@@ -55,6 +67,7 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onOptionsItemSelected(item: MenuItem) = item.getItemId match {
     case R.id.menu_clear => dotModel.clearDots() ; true
+    case R.id.menu_toggleView => toggleView() ; true
     case _ => super.onOptionsItemSelected(item)
   }
 }
