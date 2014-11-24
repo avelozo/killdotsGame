@@ -8,10 +8,6 @@ import android.view.{Menu, MenuItem}
 import model._
 import controller._
 
-object MainActivity {
-  val TAG = "edu.luc.etl.cs313.scala.uidemo"
-}
-
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
 class MainActivity extends Activity with TypedActivity with Controller {
 

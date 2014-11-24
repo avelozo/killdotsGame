@@ -12,8 +12,6 @@ import model.Dots
 class DotGenerator(dots: Dots, controller: Controller, color: Int)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
-  import MainActivity.TAG
-
   /** Delay between generation of dots. */
   val DELAY = 5000 // TODO externalize
 

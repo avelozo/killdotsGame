@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.view.View.OnKeyListener
 import android.view.{MenuItem, Menu, KeyEvent, View}
 
-import view.{ DOT_DIAMETER, DotView }
+import view.DotView
 import model.Dots
 
 import scala.util.Random
