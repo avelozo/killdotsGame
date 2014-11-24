@@ -15,8 +15,6 @@ object MainActivity {
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
 class MainActivity extends Activity with TypedActivity with Controller {
 
-  lazy val activity = this // required by Controller mixin
-
   /** The application model */
   override val dotModel = new Dots
 
@@ -39,35 +37,5 @@ class MainActivity extends Activity with TypedActivity with Controller {
     dotGenerator.cancel(true)
     dotGenerator = null
     super.onStop()
-  }
-
-  // TODO consider using State pattern
-
-  var isDotsView = true
-
-  def toggleView(): Unit = {
-    if (isDotsView) {
-      isDotsView = false
-      setContentView(R.layout.list)
-      connectListView()
-    } else {
-      isDotsView = true
-      setContentView(R.layout.main)
-      connectDotsView()
-    }
-  }
-
-  // These methods look like they should be in the Controller mixin,
-  // but onOptionsItemSelected needs to be here to use super.
-
-  override def onCreateOptionsMenu(menu: Menu) = {
-    getMenuInflater.inflate(R.menu.simple_menu, menu)
-    true
-  }
-
-  override def onOptionsItemSelected(item: MenuItem) = item.getItemId match {
-    case R.id.menu_clear => dotModel.clearDots() ; true
-    case R.id.menu_toggleView => toggleView() ; true
-    case _ => super.onOptionsItemSelected(item)
   }
 }

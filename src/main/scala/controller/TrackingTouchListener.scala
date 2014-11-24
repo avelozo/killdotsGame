@@ -7,7 +7,7 @@ import android.view.{MotionEvent, View}
 import scala.collection.mutable.ArrayBuffer
 
 import model.Dots
-import view.DotView
+import view.{ DOT_DIAMETER, DotView }
 
 /** Listen for taps. */
 class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
@@ -55,5 +55,5 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
   }
 
   private def addDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
-    dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DotView.DOT_DIAMETER).toInt)
+    dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DOT_DIAMETER).toInt)
 }

@@ -9,11 +9,6 @@ import android.view.View
 
 import model._
 
-object DotView {
-  /** Dot diameter */
-  val DOT_DIAMETER = 6 // TODO externalize
-}
-
 /**
  * I see spots!
  *
