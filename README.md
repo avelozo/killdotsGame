@@ -1,56 +1,26 @@
-[![Build Status](https://travis-ci.org/lucoodevcourse/primenumbers-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/primenumbers-android-scala) 
-[![Coverage Status](https://img.shields.io/coveralls/lucoodevcourse/primenumbers-android-scala.svg)](https://coveralls.io/r/lucoodevcourse/primenumbers-android-scala) 
-[![Download](https://api.bintray.com/packages/lucoodevcourse/generic/primenumbers-android-scala/images/download.svg) ](https://bintray.com/lucoodevcourse/generic/primenumbers-android-scala/_latestVersion)
+[![Build Status](https://travis-ci.org/lucoodevcourse/uidemo-android-scala.svg?branch=master)](https://travis-ci.org/lucoodevcourse/uidemo-android-scala) 
+[![Coverage Status](https://img.shields.io/coveralls/lucoodevcourse/uidemo-android-scala.svg)](https://coveralls.io/r/lucoodevcourse/uidemo-android-scala) 
+[![Download](https://api.bintray.com/packages/lucoodevcourse/generic/uidemo-android-scala/images/download.svg) ](https://bintray.com/lucoodevcourse/generic/uidemo-android-scala/_latestVersion)
 
-# Background
+# Overview
 
-The goal of this example is to demonstrate the tradeoffs found in
-the mobile + cloud architecture, where one has a choice between
-doing work locally (on the mobile device) versus remotely (in 
-the cloud) with different performance considerations in each case.
+This is a standalone Scala-based version of the Dots/DotView/TouchMe MVC Android UI Demo from
+chapter 6 of
+[Programming Android, 2nd Edition](http://proquestcombo.safaribooksonline.com/book/programming/android/9781449332921)
+by Zigurd Mednieks et al., O'Reilly Media, 2012, ISBN-13: 978-1-4493-1664-8.
 
-This is a very rough initial attempt and still needs significant work.
+Please refer to the book chapter for detailed information on this example.
 
 # Learning Objectives
 
-- Show how CPU-intensive computation can be off-loaded from a mobile app to
-  the cloud, by comparison to a mobile device, an unlimited resource for
-  computation and storage.
-- synchronous local foreground tasks in Android (running directly in an event listener)
-- asynchronous local background tasks in Android using [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html)
-- asynchronous access of remote resources (usually RESTful web services) in Android using [AsyncHttpClient](http://loopj.com/android-async-http)
-- remote logging to a [cloud-based exception monitoring service](https://rollbar.com)
-
-See also the [corresponding web service](https://github.com/lucoodevcourse/primenumbers-spray-scala).
+* Mapping the model-view-controller (MVC) architecture to Android
+* Understanding the [difference between model-view-controller and model-view-adapter (MVA)](https://www.palantir.com/2009/04/model-view-adapter/)
+* Support for multiple view-controller pairs
+* Android application life cycle management
+* Defining custom view components in Android
+* Handling key presses and touch events 
+* Background activities using [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html) 
 
 # Building and Running
 
 Please refer to [these notes](http://lucoodevcourse.bitbucket.org/notes/scalaandroiddev.html) for details.
-
-## Sample prime numbers to try
-
-- 1013
-- 10007
-- 100003
-- 1000003
-- 10000169
-- 100000007
-
-# Sample non-prime numbers to try
-
-- 999989
-
-# References
-
-- [Jason Christensen's OOPSLA 2009 presentation](http://www.slideshare.net/jasonc411/oopsla-2009-combining-rest-and-cloud-a-practitioners-report)
-
-# TODO
-
-* improve UI
-* improve architecture
-* architectural diagram
-* testing
-* define task in a way that it can be decomposed! 
-  (e.g. each task to check divisibility within a specific range)
-* typed AsyncTask that hides the need to use AnyRef for input and progress values
-* make more functional
