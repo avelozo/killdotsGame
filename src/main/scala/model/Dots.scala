@@ -46,9 +46,16 @@ class Dots {
   }
 
   def killDot(x:Float, y: Float, color: Int, diameter: Int): Unit ={
-    dots -= Dot(x, y, color, diameter)
+    getDots().foreach(dot => findDot(dot,x, y, color, diameter) )
+
     notifyListener()
 
+  }
+
+  private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
+   if((dot.x+50>xpress) && (dot.x-50<xpress)&& (dot.y+50>xpress) && (dot.y-50<xpress)){
+     dots -= Dot(dot.x, dot.y, colorPress, diameterPress)
+   }
   }
 
   /** Remove all dots. */

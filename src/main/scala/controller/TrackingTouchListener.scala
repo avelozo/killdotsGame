@@ -43,7 +43,7 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
 
     for (i <- tracks) {
       val idx = evt.findPointerIndex(i)
-      addDot(dots,
+      killDot(dots,
         evt.getX(idx),
         evt.getY(idx),
         evt.getPressure(idx),
@@ -59,5 +59,5 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
 
 
  private def killDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
-dots.addDot(x, y, Color.rgb(94,14,186), DOT_DIAMETER)
+dots.killDot(x, y, Color.rgb(94,14,186), DOT_DIAMETER)
 }
