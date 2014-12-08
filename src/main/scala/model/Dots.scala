@@ -1,5 +1,7 @@
 package edu.luc.etl.cs313.scala.uidemo.model
 
+import edu.luc.etl.cs313.scala.uidemo
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -53,7 +55,7 @@ class Dots {
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
-   if((dot.x+50>xpress) && (dot.x-50<xpress)&& (dot.y+50>xpress) && (dot.y-50<xpress)){
+   if((dot.x+uidemo.DOT_DIAMETER*10>xpress) && (dot.x-uidemo.DOT_DIAMETER*10<xpress)&& (dot.y+uidemo.DOT_DIAMETER*10>ypress) && (dot.y-uidemo.DOT_DIAMETER*10<ypress)){
      dots -= Dot(dot.x, dot.y, colorPress, diameterPress)
    }
   }
