@@ -25,7 +25,7 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new DotGenerator(dotModel, this, Color.BLACK)
+    dotGenerator = new DotGenerator(dotModel, this, Color.rgb(94,14,186))
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
   }
 

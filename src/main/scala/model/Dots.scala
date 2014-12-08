@@ -45,6 +45,12 @@ class Dots {
     notifyListener()
   }
 
+  def killDot(x:Float, y: Float, color: Int, diameter: Int): Unit ={
+    dots -= Dot(x, y, color, diameter)
+    notifyListener()
+
+  }
+
   /** Remove all dots. */
   def clearDots(): Unit = {
     dots.clear()

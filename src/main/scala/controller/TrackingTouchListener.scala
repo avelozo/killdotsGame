@@ -26,7 +26,7 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
           MotionEvent.ACTION_POINTER_INDEX_SHIFT;
         tracks -= evt.getPointerId(idx)
       case MotionEvent.ACTION_MOVE =>
-        for (i <- tracks) {
+        /*for (i <- tracks) {
           val idx = evt.findPointerIndex(i)
           for (j <- 0 until evt.getHistorySize) {
             addDot(
@@ -37,7 +37,7 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
               evt.getHistoricalSize(idx, j)
             )
           }
-        }
+        }*/
       case _ => return false
     }
 
@@ -56,4 +56,8 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
 
   private def addDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
     dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DOT_DIAMETER).toInt)
+
+
+ private def killDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
+dots.addDot(x, y, Color.rgb(94,14,186), DOT_DIAMETER)
 }
