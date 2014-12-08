@@ -14,15 +14,24 @@ class DotGenerator(dots: Dots, controller: Controller, color: Int)
 
   /** Delay between generation of dots. */
   val DELAY = 5000 // TODO externalize
+  val DELAYCHANGE= 7000
 
-  override protected def onProgressUpdate(values: AnyRef*) =
+  override protected def onProgressUpdate(values: AnyRef*) = {
     controller.makeDot(dots, color) // this method runs on the UI thread!
+
+  }
+
+
+  def changeDots(): Unit ={
+    controller.changeDot(dots)
+  }
 
   override protected def doInBackground(params: AnyRef*): AnyRef = {
     while (! isCancelled) {
       Log.d(TAG, "dot generator scheduling dot creation of color " + color)
       publishProgress(null)
       try { Thread.sleep(DELAY) } catch { case _: InterruptedException => return null }
+      changeDots
     }
     null
   }

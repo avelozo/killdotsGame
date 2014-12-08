@@ -3,10 +3,12 @@ package edu.luc.etl.cs313.scala.uidemo
 import android.app.Activity
 import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
-import android.view.{Menu, MenuItem}
+import android.view._
 
 import model._
 import controller._
+
+import scala.Predef.any2Ensuring
 
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
 class MainActivity extends Activity with TypedActivity with Controller {
@@ -25,8 +27,9 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new DotGenerator(dotModel, this, Color.rgb(94,14,186))
+    dotGenerator = new DotGenerator(dotModel, this, Color.YELLOW)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+
   }
 
   override def onStop() = {
