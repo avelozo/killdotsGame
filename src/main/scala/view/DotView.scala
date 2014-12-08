@@ -20,7 +20,8 @@ import model._
  */
 class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View(context, attrs, defStyle) {
 
-  { setFocusableInTouchMode(true) }
+  { setFocusableInTouchMode(true)
+   }
 
   /** The model underlying this view. */
   private var dots: Dots = _
@@ -29,6 +30,7 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
   def this(context: Context) = {
     this(context, null, 0)
     setFocusableInTouchMode(true)
+
   }
 
   /**
@@ -38,6 +40,7 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
   def this(context: Context, attrs: AttributeSet) = {
     this(context, attrs, 0)
     setFocusableInTouchMode(true)
+
   }
 
   /**
@@ -46,6 +49,10 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
    * @param dots
    * */
   def setDots(dots: Dots): Unit = this.dots = dots
+
+ def  Width(): Integer=getWidth
+ def Height(): Integer= getHeight
+
 
   /** @see android.view.View#onDraw(android.graphics.Canvas) */
   override protected def onDraw(canvas: Canvas): Unit = {

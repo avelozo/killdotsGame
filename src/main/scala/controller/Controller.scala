@@ -3,6 +3,7 @@ package controller
 
 import android.app.Activity
 import android.graphics.Color
+
 import android.view.View.OnKeyListener
 import android.view.{MenuItem, Menu, KeyEvent, View}
 
@@ -92,6 +93,18 @@ trait Controller extends Activity with TypedActivityHolder {
       DOT_DIAMETER + (Random.nextFloat() * (dotView.getHeight - pad)),
       color,
       DOT_DIAMETER)
+  }
+
+  def changeDot(dots: Dots): Unit ={
+
+    dots.getDots().foreach(dot =>
+
+      if(dot.color== Color.GREEN){
+        dot.color= Color.YELLOW
+
+      }else{
+        dot.color= Color.GREEN
+      })
   }
 
   def connectListView(): Unit = {

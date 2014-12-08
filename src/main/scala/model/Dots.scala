@@ -11,7 +11,7 @@ import scala.collection.mutable.ListBuffer
  * @param color the color.
  * @param diameter dot diameter.
  */
-case class Dot(x: Float, y: Float, color: Int, diameter: Int)
+case class Dot(var x: Float, var y: Float, var color: Int,  diameter: Int)
 
 object Dots {
   trait DotsChangeListener {
