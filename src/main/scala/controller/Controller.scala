@@ -18,6 +18,7 @@ import scala.util.Random
 trait Controller extends Activity with TypedActivityHolder {
 
   val dotModel: Dots
+  var listSquares: ListBuffer[Square] = new ListBuffer[Square]
 
   private var dotView: DotView = _
 
@@ -111,14 +112,17 @@ trait Controller extends Activity with TypedActivityHolder {
    * @param color the color of the dot
    */
   def makeDot(dots: Dots, color: Int): Unit = {
-    val pad = (DOT_DIAMETER + 2) * 2
-    dots.addDot(
-      DOT_DIAMETER + (Random.nextFloat() * (dotView.getWidth - pad)),
-      DOT_DIAMETER + (Random.nextFloat() * (dotView.getHeight - pad)),
-      color,
-      DOT_DIAMETER)
-  }
+    var found = false
+    var squarePos = new Square(0,0)
+    listSquares.foreach(sq => found = found || !sq.full)
 
+    if (found) {
+      do{
+         squarePos = listSquares(Random.nextInt(listSquares.length))
+      }while(squarePos.full)
+      dots.addDot(squarePos,color,DOT_DIAMETER)
+    }
+  }
   def changeDot(dots: Dots): Unit ={
 
     dots.getDots().foreach(dot =>

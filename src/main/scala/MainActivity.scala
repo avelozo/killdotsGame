@@ -4,7 +4,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
 import android.view._
-
+import scala.collection.mutable.ListBuffer
 import model._
 import controller._
 
@@ -19,6 +19,7 @@ class MainActivity extends Activity with TypedActivity with Controller {
   /** The dot generator */
   var dotGenerator: DotGenerator = _
 
+
   override def onCreate(state: Bundle) = {
     super.onCreate(state)
     setContentView(R.layout.main)
@@ -29,7 +30,7 @@ class MainActivity extends Activity with TypedActivity with Controller {
     super.onStart()
     dotGenerator = new DotGenerator(dotModel, this, Color.YELLOW)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-
+    listSquares = calcSquares()
   }
 
   override def onStop() = {
