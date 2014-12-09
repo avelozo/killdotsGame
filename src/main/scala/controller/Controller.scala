@@ -88,22 +88,22 @@ trait Controller extends Activity with TypedActivityHolder {
   }
 
 
-  def calcSquares(): ListBuffer[Square] ={
-    val qntSquare : Int = dotView.getWidth/57
-    val side: Float= dotView.getWidth/qntSquare
-  var h: Float=0
+  def calcSquares(): ListBuffer[Square] = {
+    val qntSquare : Int = dotView.getWidth / 57
+    val side: Float = dotView.getWidth / qntSquare
+    var h: Float = 0
     var w : Float = 0
     var list = new ListBuffer[Square]
-    while(h< dotView.getHeight){
-      while(w< dotView.getWidth) {
-        var square: Square = new Square(w,h)
-      list+= square
-        w+=side
+    while(h < dotView.getHeight){
+      while(w < dotView.getWidth) {
+        var square: Square = new Square(w, h, false)
+        list += square
+        w += side
       }
-      w=0
-      h+=side
+      w = 0
+      h += side
     }
-   list
+    list
   }
 
   /**
