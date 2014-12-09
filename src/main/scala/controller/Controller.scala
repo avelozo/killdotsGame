@@ -8,8 +8,10 @@ import android.view.View.OnKeyListener
 import android.view.{MenuItem, Menu, KeyEvent, View}
 
 import view.DotView
-import model.Dots
+import edu.luc.etl.cs313.scala.uidemo.model.{Square, Dots}
 
+import scala.collection.mutable.ListBuffer
+import scala.math
 import scala.util.Random
 
 /** Controller mixin (stackable trait) for Android UI demo program */
@@ -35,8 +37,11 @@ trait Controller extends Activity with TypedActivityHolder {
     }
   }
 
+
+
   override def onCreateOptionsMenu(menu: Menu) = {
     getMenuInflater.inflate(R.menu.simple_menu, menu)
+    findView(TR.text1).setText("W" + dotView.getWidth)
     true
   }
 
@@ -75,11 +80,30 @@ trait Controller extends Activity with TypedActivityHolder {
     dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
       def onDotsChange(dots: Dots) = {
         val d = dots.getLastDot
-        findView(TR.text1).setText(if (null == d) "" else d.x.toString)
-        findView(TR.text2).setText(if (null == d) "" else d.y.toString)
+        findView(TR.text1).setText(if (null == d) "" else "WI" + dotView.getWidth)
+        findView(TR.text2).setText(if (null == d) "" else "xlast" +calcSquares().last.x) //d.y.toString)
         dotView.invalidate()
       }
     })
+  }
+
+
+  def calcSquares(): ListBuffer[Square] ={
+    val qntSquare : Int = dotView.getWidth/57
+    val side: Float= dotView.getWidth/qntSquare
+  var h: Float=0
+    var w : Float = 0
+    var list = new ListBuffer[Square]
+    while(h< dotView.getHeight){
+      while(w< dotView.getWidth) {
+        var square: Square = new Square(w,h)
+      list+= square
+        w+=side
+      }
+      w=0
+      h+=side
+    }
+   list
   }
 
   /**
