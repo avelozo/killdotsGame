@@ -12,6 +12,8 @@ import scala.collection.mutable.ListBuffer
  */
 case class Dot(var pos: Square, var color: Int,  diameter: Int)
 case class Square(var x: Float, var y: Float, var full: Boolean)
+
+
 object Dots {
   trait DotsChangeListener {
     /** @param dots the monsters that changed. */
