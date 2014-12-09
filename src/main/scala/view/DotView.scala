@@ -9,6 +9,8 @@ import android.view.View
 
 import model._
 
+import scala.collection.mutable.ListBuffer
+
 /**
  * I see spots!
  *
@@ -50,8 +52,6 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
    * */
   def setDots(dots: Dots): Unit = this.dots = dots
 
- def  Width(): Integer=getWidth
- def Height(): Integer= getHeight
 
 
   /** @see android.view.View#onDraw(android.graphics.Canvas) */

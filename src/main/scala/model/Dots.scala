@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
  * @param diameter dot diameter.
  */
 case class Dot(var x: Float, var y: Float, var color: Int,  diameter: Int)
-
+case class Square(var x: Float, var y: Float)
 object Dots {
   trait DotsChangeListener {
     /** @param dots the dots that changed. */
