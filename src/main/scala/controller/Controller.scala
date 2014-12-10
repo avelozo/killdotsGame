@@ -3,15 +3,12 @@ package controller
 
 import android.app.Activity
 import android.graphics.Color
-
 import android.view.View.OnKeyListener
-import android.view.{MenuItem, Menu, KeyEvent, View}
-
-import view.DotView
-import edu.luc.etl.cs313.scala.uidemo.model.{Square, Dots}
+import android.view.{KeyEvent, Menu, MenuItem, View}
+import edu.luc.etl.cs313.scala.uidemo.model.{Dots, Square}
+import edu.luc.etl.cs313.scala.uidemo.view.DotView
 
 import scala.collection.mutable.ListBuffer
-import scala.math
 import scala.util.Random
 
 /** Controller mixin (stackable trait) for Android UI demo program */
@@ -81,22 +78,22 @@ trait Controller extends Activity with TypedActivityHolder {
     dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
       def onDotsChange(dots: Dots) = {
         val d = dots.getLastDot
-        findView(TR.text1).setText(if (null == d) "" else "WI" + dotView.getWidth)
-        findView(TR.text2).setText(if (null == d) "" else "xlast" +calcSquares().last.x) //d.y.toString)
+        findView(TR.text1).setText(if (null == d) "" else "WID" + dotView.getWidth)
+        findView(TR.text2).setText(if (null == d) "" else "xlast" + dotView.getMeasuredWidth) //d.y.toString)
         dotView.invalidate()
       }
     })
   }
 
-
   def calcSquares(): ListBuffer[Square] = {
-    val qntSquare : Int = dotView.getWidth / 57
-    val side: Float = dotView.getWidth / qntSquare
+    val qntSquare : Int = 768 / 57
+    val side: Float = 768 / qntSquare
+    dotModel.side = side
     var h: Float = 0
     var w : Float = 0
     var list = new ListBuffer[Square]
-    while(h < dotView.getHeight){
-      while(w < dotView.getWidth) {
+    while(h < 1280){
+      while(w < 768) {
         var square: Square = new Square(w, h, false)
         list += square
         w += side
@@ -113,7 +110,7 @@ trait Controller extends Activity with TypedActivityHolder {
    */
   def makeDot(dots: Dots, color: Int): Unit = {
     var found = false
-    var squarePos = new Square(0,0)
+    var squarePos = new Square(0, 0, false)
     listSquares.foreach(sq => found = found || !sq.full)
 
     if (found) {
