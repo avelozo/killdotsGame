@@ -92,7 +92,7 @@ trait Controller extends Activity with TypedActivityHolder {
     var h: Float = 0
     var w : Float = 0
     var list = new ListBuffer[Square]
-    while(h < 1280){
+    while(h < 768){
       while(w < 768) {
         var square: Square = new Square(w, h, false)
         list += square
@@ -120,6 +120,7 @@ trait Controller extends Activity with TypedActivityHolder {
       dots.addDot(squarePos,color,DOT_DIAMETER)
     }
   }
+
   def changeDot(dots: Dots): Unit ={
 
     dots.getDots().foreach(dot =>
@@ -130,6 +131,35 @@ trait Controller extends Activity with TypedActivityHolder {
       }else{
         dot.color= Color.GREEN
       })
+  }
+
+  def moveDot(dots: Dots): Unit ={
+
+    val possibleMoves = new ListBuffer[Square]()
+    var newSquare = new Square(0, 0, false)
+
+    dots.getDots().foreach(dot => {
+
+      possibleMoves.clear()
+
+      listSquares.foreach(square => {
+        if (!square.full &&
+          (Math.abs(square.x - dot.pos.x) <= dotModel.side) &&
+          (Math.abs(square.y - dot.pos.y) <= dotModel.side)) {
+          possibleMoves += square
+        }
+      })
+
+      if (possibleMoves.length > 0) {
+        newSquare = possibleMoves(Random.nextInt(possibleMoves.length))
+
+        newSquare.full = true
+        dot.pos.full = false
+        dot.pos = newSquare
+      }
+
+    })
+
   }
 
   def connectListView(): Unit = {

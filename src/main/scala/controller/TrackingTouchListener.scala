@@ -56,7 +56,7 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
     dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DOT_DIAMETER).toInt)*/
 
 
- private def killDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
-dots.killDot(x, y, Color.YELLOW, DOT_DIAMETER)
+  private def killDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
+    dots.killDot(x, y, Color.YELLOW, DOT_DIAMETER)
 
 }
