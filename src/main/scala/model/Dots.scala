@@ -1,6 +1,9 @@
 package edu.luc.etl.cs313.scala.uidemo.model
 
+import android.graphics.Color
+
 import scala.collection.mutable.ListBuffer
+import scala.util.Random
 
 /**
  * A monster: the square, color and size.
@@ -52,13 +55,51 @@ class Dots {
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
-   if((dot.pos.x + side > xpress) &&
-      (dot.pos.x - side < xpress) &&
+    if((dot.pos.x + side > xpress) &&
+      (dot.pos.x < xpress) &&
       (dot.pos.y + side > ypress) &&
-      (dot.pos.y - side < ypress)){
-     dot.pos.full = false
-     dots -= Dot(dot.pos, colorPress, diameterPress)
-   }
+      (dot.pos.y < ypress)){
+      dot.pos.full = false
+      dots -= Dot(dot.pos, colorPress, diameterPress)
+    }
+  }
+
+  def changeDot(): Unit = {
+    getDots().foreach(dot =>
+      if(dot.color == Color.GREEN){
+        dot.color = Color.YELLOW
+      }else{
+        dot.color = Color.GREEN
+      }
+    )
+    notifyListener()
+  }
+
+  def moveDot(listSquares: ListBuffer[Square]): Unit = {
+    val possibleMoves = new ListBuffer[Square]()
+    var newSquare: Square = null
+
+    getDots().foreach(dot => {
+      possibleMoves.clear()
+
+      listSquares.foreach(square => {
+        if (!square.full &&
+          (Math.abs(square.x - dot.pos.x) <= side) &&
+          (Math.abs(square.y - dot.pos.y) <= side)) {
+          possibleMoves += square
+        }
+      })
+
+      if (possibleMoves.length > 0) {
+        newSquare = possibleMoves(Random.nextInt(possibleMoves.length))
+
+        newSquare.full = true
+        dot.pos.full = false
+        dot.pos = newSquare
+      }
+    })
+
+    notifyListener()
   }
 
   /** Remove all dots. */

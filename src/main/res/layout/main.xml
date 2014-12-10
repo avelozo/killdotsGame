@@ -47,7 +47,6 @@
 
     <Button
         android:id="@+id/button1"
-        android:text="@string/labelRed"
         android:textColor="@color/red"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
@@ -55,7 +54,6 @@
 
     <Button
         android:id="@+id/button2"
-        android:text="@string/labelGreen"
         android:textColor="@color/green"
         android:layout_height="wrap_content"
         android:layout_width="0dp"

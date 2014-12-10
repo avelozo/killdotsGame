@@ -13,7 +13,7 @@ class DotGenerator(dots: Dots, controller: Controller, color: Int)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
   /** Delay between generation of dots. */
-  val DELAY = 1000 // TODO externalize
+  val DELAY = 5000 // TODO externalize
 
   override protected def onProgressUpdate(values: AnyRef*) = {
     //while (dots.getDots().length < 4)
@@ -39,7 +39,7 @@ class MonsterChanger(dots: Dots, controller: Controller, color: Int)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
   /** Delay between change of monsters. */
-  val DELAY = 5000
+  val DELAY = 3000
 
   override protected def onProgressUpdate(values: AnyRef*) = {
     controller.changeDot(dots) // this method runs on the UI thread!
@@ -59,7 +59,7 @@ class MonsterMover(dots: Dots, controller: Controller, color: Int)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
   /** Delay between generation of dots. */
-  val DELAY = 2000 // TODO externalize
+  val DELAY = 1000 // TODO externalize
 
   override protected def onProgressUpdate(values: AnyRef*) = {
     controller.moveDot(dots) // this method runs on the UI thread!
