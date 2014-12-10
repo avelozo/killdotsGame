@@ -14,7 +14,8 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   /** The dot generator */
   var dotGenerator: DotGenerator = _
-
+  var monsterChanger: MonsterChanger = _
+  var monsterMover: MonsterMover = _
 
   override def onCreate(state: Bundle) = {
     super.onCreate(state)
@@ -26,6 +27,10 @@ class MainActivity extends Activity with TypedActivity with Controller {
     super.onStart()
     dotGenerator = new DotGenerator(dotModel, this, Color.YELLOW)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+    monsterChanger = new MonsterChanger(dotModel, this, Color.YELLOW)
+    monsterChanger.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+    monsterMover = new MonsterMover(dotModel, this, Color.YELLOW)
+    monsterMover.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
   }
 
   override def onResume() = {
@@ -36,6 +41,10 @@ class MainActivity extends Activity with TypedActivity with Controller {
   override def onStop() = {
     dotGenerator.cancel(true)
     dotGenerator = null
+    monsterChanger.cancel(true)
+    monsterChanger = null
+    monsterMover.cancel(true)
+    monsterMover = null
     super.onStop()
   }
 }

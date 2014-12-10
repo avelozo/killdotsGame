@@ -56,6 +56,7 @@ class Dots {
       (dot.pos.x - side < xpress) &&
       (dot.pos.y + side > ypress) &&
       (dot.pos.y - side < ypress)){
+     dot.pos.full = false
      dots -= Dot(dot.pos, colorPress, diameterPress)
    }
   }
