@@ -8,7 +8,7 @@ import model.Dots
 
 // TODO figure out how to replace this with a future
 
-/** Generate new dots, one per second. */
+/** Generate new dots, one per 5 seconds. */
 class DotGenerator(dots: Dots, controller: Controller, color: Int)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
 
@@ -29,8 +29,8 @@ class DotGenerator(dots: Dots, controller: Controller, color: Int)
   override protected def doInBackground(params: AnyRef*): AnyRef = {
     while (! isCancelled) {
       Log.d(TAG, "dot generator scheduling dot creation of color " + color)
-      publishProgress(null)
       try { Thread.sleep(DELAY) } catch { case _: InterruptedException => return null }
+      publishProgress(null)
       changeDots
     }
     null

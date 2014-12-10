@@ -3,12 +3,8 @@ package edu.luc.etl.cs313.scala.uidemo
 import android.app.Activity
 import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
-import android.view._
-import scala.collection.mutable.ListBuffer
-import model._
-import controller._
-
-import scala.Predef.any2Ensuring
+import edu.luc.etl.cs313.scala.uidemo.controller._
+import edu.luc.etl.cs313.scala.uidemo.model._
 
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
 class MainActivity extends Activity with TypedActivity with Controller {
@@ -30,6 +26,10 @@ class MainActivity extends Activity with TypedActivity with Controller {
     super.onStart()
     dotGenerator = new DotGenerator(dotModel, this, Color.YELLOW)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+  }
+
+  override def onResume() = {
+    super.onResume()
     listSquares = calcSquares()
   }
 

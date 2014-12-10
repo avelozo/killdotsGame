@@ -3,11 +3,9 @@ package controller
 
 import android.graphics.Color
 import android.view.{MotionEvent, View}
+import edu.luc.etl.cs313.scala.uidemo.model.Dots
 
 import scala.collection.mutable.ArrayBuffer
-
-import model.Dots
-import view.DotView
 
 /** Listen for taps. */
 class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
@@ -54,8 +52,8 @@ class TrackingTouchListener(dots: Dots) extends View.OnTouchListener {
     true
   }
 
-  private def addDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
-    dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DOT_DIAMETER).toInt)
+/*  private def addDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =
+    dots.addDot(x, y, Color.CYAN, ((p + 0.5) * (s + 0.5) * DOT_DIAMETER).toInt)*/
 
 
  private def killDot(dots: Dots, x: Float, y: Float, p: Float, s: Float) =

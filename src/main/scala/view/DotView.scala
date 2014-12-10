@@ -2,14 +2,11 @@ package edu.luc.etl.cs313.scala.uidemo
 package view
 
 import android.content.Context
-import android.graphics.{Canvas, Color, Paint}
 import android.graphics.Paint.Style
+import android.graphics.{Canvas, Color, Paint}
 import android.util.AttributeSet
 import android.view.View
-
-import model._
-
-import scala.collection.mutable.ListBuffer
+import edu.luc.etl.cs313.scala.uidemo.model._
 
 /**
  * I see spots!
@@ -67,7 +64,7 @@ class DotView(context: Context, attrs: AttributeSet, defStyle: Int) extends View
     paint.setStyle(Style.FILL)
     for (dot <- dots.getDots) {
       paint.setColor(dot.color)
-      canvas.drawCircle(dot.x, dot.y, dot.diameter, paint)
+      canvas.drawCircle(dot.pos.x, dot.pos.y, dot.diameter, paint)
     }
   }
 }

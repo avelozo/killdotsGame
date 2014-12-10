@@ -1,7 +1,5 @@
 package edu.luc.etl.cs313.scala.uidemo.model
 
-import edu.luc.etl.cs313.scala.uidemo
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -24,6 +22,7 @@ object Dots {
 /** A list of monsters. */
 class Dots {
 
+  var side : Float = 0
   private val dots = new ListBuffer[Dot]
 
   private var dotsChangeListener: Dots.DotsChangeListener = _
@@ -53,8 +52,11 @@ class Dots {
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
-   if((dot.x+uidemo.DOT_DIAMETER*10>xpress) && (dot.x-uidemo.DOT_DIAMETER*10<xpress)&& (dot.y+uidemo.DOT_DIAMETER*10>ypress) && (dot.y-uidemo.DOT_DIAMETER*10<ypress)){
-     dots -= Dot(dot.x, dot.y, colorPress, diameterPress)
+   if((dot.pos.x + side > xpress) &&
+      (dot.pos.x - side < xpress) &&
+      (dot.pos.y + side > ypress) &&
+      (dot.pos.y - side < ypress)){
+     dots -= Dot(dot.pos, colorPress, diameterPress)
    }
   }
 
