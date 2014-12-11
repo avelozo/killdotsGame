@@ -78,8 +78,14 @@ trait Controller extends Activity with TypedActivityHolder {
       def onDotsChange(dots: Dots) = {
         val d = dots.getLastDot
         findView(TR.text1).setText(if (null == d) "" else "")
-        findView(TR.text2).setText(if (null == d) "" else "") //d.y.toString)
+        //findView(TR.text2).setText(if (null == d) "" else "") //d.y.toString)
         dotView.invalidate()
+      }
+    })
+
+    dotModel.setScoreChangeListener(new Dots.ScoreChangeListener {
+      def onScoreChange(score: Int) = {
+        findView(TR.text2).setText("Score: " + score.toString) //d.y.toString)
       }
     })
   }

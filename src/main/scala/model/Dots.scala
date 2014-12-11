@@ -65,16 +65,34 @@ object Dots {
     /** @param dots the monsters that changed. */
     def onDotsChange(dots: Dots): Unit
   }
+  trait LevelChangeListener {
+    /** @param level the new level. */
+    def onLevelChange(level: Int): Unit
+  }
+  trait ScoreChangeListener {
+    /** @param score the new score. */
+    def onScoreChange(score: Int): Unit
+  }
 }
 
 /** A list of monsters. */
 class Dots {
 
   private val dots = new ListBuffer[Dot]
+  private var level = 0
+  private var score = 0
   private var dotsChangeListener: Dots.DotsChangeListener = _
+  private var levelChangeListener: Dots.LevelChangeListener = _
+  private var scoreChangeListener: Dots.ScoreChangeListener = _
 
-  /** @param l set the change listener. */
+  /** @param l set the monsters change listener. */
   def setDotsChangeListener(l: Dots.DotsChangeListener) = dotsChangeListener = l
+
+  /** @param l set the level change listener. */
+  def setLevelChangeListener(l: Dots.LevelChangeListener) = levelChangeListener = l
+
+  /** @param l set the score change listener. */
+  def setScoreChangeListener(l: Dots.ScoreChangeListener) = scoreChangeListener = l
 
   /** @return the most recently added monster. */
   def getLastDot(): Dot = if (dots.size <= 0) null else dots.last // TODO convert to option
@@ -89,12 +107,12 @@ class Dots {
    */
   def addDot(pos: Square, color: Int, diameter: Int): Unit = {
     dots += Dot(pos, color, diameter)
-    notifyListener()
+    notifyMonsterListener()
   }
 
   def killDot(x:Float, y: Float, color: Int, diameter: Int): Unit ={
     getDots().foreach(dot => findDot(dot,x, y, color, diameter) )
-    notifyListener()
+    notifyMonsterListener()
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
@@ -102,8 +120,13 @@ class Dots {
       (dot.pos.x < xpress) &&
       (dot.pos.y + dot.pos.side > ypress) &&
       (dot.pos.y < ypress)){
-      dot.pos.full = false
+      val count = dots.length
       dots -= Dot(dot.pos, colorPress, diameterPress)
+      if (dots.length < count) {
+        dot.pos.full = false
+        score += 1
+        notifyScoreListener()
+      }
     }
   }
 
@@ -115,7 +138,7 @@ class Dots {
         dot.color = Color.GREEN
       }
     )
-    notifyListener()
+    notifyMonsterListener()
   }
 
   def moveDot(listSquares: List[Square]): Unit = {
@@ -142,17 +165,25 @@ class Dots {
       }
     })
 
-    notifyListener()
+    notifyMonsterListener()
   }
 
   /** Remove all dots. */
   def clearDots(): Unit = {
     dots.clear()
-    notifyListener()
+    notifyMonsterListener()
   }
 
-  private def notifyListener(): Unit =
+  private def notifyMonsterListener(): Unit =
     if (null != dotsChangeListener)
       dotsChangeListener.onDotsChange(this)
+
+  private def notifyLevelListener(): Unit =
+    if (null != levelChangeListener)
+      levelChangeListener.onLevelChange(level)
+
+  private def notifyScoreListener(): Unit =
+    if (null != scoreChangeListener)
+      scoreChangeListener.onScoreChange(score)
 
 }

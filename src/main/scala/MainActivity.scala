@@ -1,7 +1,6 @@
 package edu.luc.etl.cs313.scala.uidemo
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
 import edu.luc.etl.cs313.scala.uidemo.controller._
 import edu.luc.etl.cs313.scala.uidemo.model._
@@ -26,11 +25,11 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new DotGenerator(dotModel, this, Color.YELLOW)
+    dotGenerator = new DotGenerator(dotModel, this, 1)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterChanger = new MonsterChanger(dotModel, this, Color.YELLOW)
+    monsterChanger = new MonsterChanger(dotModel, this, 1)
     monsterChanger.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterMover = new MonsterMover(dotModel, this, Color.YELLOW)
+    monsterMover = new MonsterMover(dotModel, this, 1)
     monsterMover.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
   }
 
