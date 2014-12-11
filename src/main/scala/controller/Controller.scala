@@ -5,7 +5,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.view.View.OnKeyListener
 import android.view.{KeyEvent, Menu, MenuItem, View}
-import edu.luc.etl.cs313.scala.uidemo.model.{Dots, Square}
+import edu.luc.etl.cs313.scala.uidemo.model.{Dots, Square, Squares}
 import edu.luc.etl.cs313.scala.uidemo.view.DotView
 
 import scala.collection.mutable.ListBuffer
@@ -15,7 +15,7 @@ import scala.util.Random
 trait Controller extends Activity with TypedActivityHolder {
 
   val dotModel: Dots
-  var listSquares: ListBuffer[Square] = new ListBuffer[Square]
+  val squareModel: Squares
 
   private var dotView: DotView = _
 
@@ -84,35 +84,23 @@ trait Controller extends Activity with TypedActivityHolder {
     })
   }
 
-  def calcSquares(): ListBuffer[Square] = {
-    val qntSquare : Int = 768 / 57
-    val side: Float = 768 / qntSquare
-    dotModel.side = side
-    var h: Float = 0
-    var w : Float = 0
-    var list = new ListBuffer[Square]
-
-    for (h <- 0 until qntSquare) {
-      for (w <- 0 until qntSquare) {
-        list += new Square(h * side, w * side, false)
-      }
-    }
-    list
-  }
-
   /**
    * @param dots the dots we're drawing
    * @param color the color of the dot
    */
   def makeDot(dots: Dots, color: Int): Unit = {
-    var found = false
     var squarePos : Square = null
-    listSquares.foreach(sq => found = found || !sq.full)
+    val availableSquares = new ListBuffer[Square]()
+    val squareList = squareModel.getSquares()
 
-    if (found) {
-      do{
-         squarePos = listSquares(Random.nextInt(listSquares.length))
-      }while(squarePos.full)
+    squareList.foreach(square => {
+      if (!square.full) {
+        availableSquares += square
+      }
+    })
+
+    if (availableSquares.length > 0) {
+      squarePos = availableSquares(Random.nextInt(availableSquares.length))
       dots.addDot(squarePos,color,DOT_DIAMETER)
     }
   }
@@ -122,7 +110,7 @@ trait Controller extends Activity with TypedActivityHolder {
   }
 
   def moveDot(dots: Dots): Unit ={
-    dots.moveDot(listSquares)
+    dots.moveDot(squareModel.getSquares())
   }
 
   def connectListView(): Unit = {

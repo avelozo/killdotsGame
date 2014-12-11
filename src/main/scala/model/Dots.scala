@@ -14,6 +14,45 @@ import scala.util.Random
 case class Dot(var pos: Square, var color: Int,  diameter: Int)
 case class Square(var x: Float, var y: Float, var full: Boolean)
 
+/** A list of squares. */
+class Squares {
+
+  /** @groupdesc internal list. */
+  private val squares = new ListBuffer[Square]
+
+  /** @groupdesc size of the side. */
+  var side : Float = 0
+
+  /** @return immutable list of squares. */
+  def getSquares(): List[Square] = squares.toList
+
+  /**
+   * @param x horizontal position.
+   * @param y vertical position.
+   * @param full occupation status.
+   */
+  def addSquare(x: Float, y: Float, full: Boolean): Unit = {
+    squares += Square(x, y, full)
+  }
+
+  /**
+   * @param width horizontal screen size.
+   * @param height vertical screen size.
+   */
+  def populate(width: Int, height: Int): Unit = {
+
+    val qntSquare : Int = 768 / 57
+    side = 768 / qntSquare
+
+    for (h <- 0 until qntSquare) {
+      for (w <- 0 until qntSquare) {
+        addSquare(h * side, w * side, false)
+      }
+    }
+
+  }
+
+}
 
 object Dots {
   trait DotsChangeListener {
@@ -25,8 +64,12 @@ object Dots {
 /** A list of monsters. */
 class Dots {
 
-  var side : Float = 0
   private val dots = new ListBuffer[Dot]
+
+  var squareModel : Squares = null
+
+  /** @param model set the square model. */
+  def setSquareModel(model: Squares) = squareModel = model
 
   private var dotsChangeListener: Dots.DotsChangeListener = _
 
@@ -55,9 +98,9 @@ class Dots {
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
-    if((dot.pos.x + side > xpress) &&
+    if((dot.pos.x + squareModel.side > xpress) &&
       (dot.pos.x < xpress) &&
-      (dot.pos.y + side > ypress) &&
+      (dot.pos.y + squareModel.side > ypress) &&
       (dot.pos.y < ypress)){
       dot.pos.full = false
       dots -= Dot(dot.pos, colorPress, diameterPress)
@@ -75,7 +118,7 @@ class Dots {
     notifyListener()
   }
 
-  def moveDot(listSquares: ListBuffer[Square]): Unit = {
+  def moveDot(listSquares: List[Square]): Unit = {
     val possibleMoves = new ListBuffer[Square]()
     var newSquare: Square = null
 
@@ -84,8 +127,8 @@ class Dots {
 
       listSquares.foreach(square => {
         if (!square.full &&
-          (Math.abs(square.x - dot.pos.x) <= side) &&
-          (Math.abs(square.y - dot.pos.y) <= side)) {
+          (Math.abs(square.x - dot.pos.x) <= squareModel.side) &&
+          (Math.abs(square.y - dot.pos.y) <= squareModel.side)) {
           possibleMoves += square
         }
       })

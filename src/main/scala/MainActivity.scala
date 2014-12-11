@@ -11,8 +11,9 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   /** The application model */
   override val dotModel = new Dots
+  override val squareModel = new Squares
 
-  /** The dot generator */
+  /** The monster threads (generator, changer and mover) */
   var dotGenerator: DotGenerator = _
   var monsterChanger: MonsterChanger = _
   var monsterMover: MonsterMover = _
@@ -35,7 +36,8 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onResume() = {
     super.onResume()
-    listSquares = calcSquares()
+    dotModel.setSquareModel(squareModel)
+    squareModel.populate(768, 768)
   }
 
   override def onStop() = {
