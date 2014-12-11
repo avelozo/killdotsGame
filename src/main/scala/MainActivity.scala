@@ -36,7 +36,6 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onResume() = {
     super.onResume()
-    dotModel.setSquareModel(squareModel)
     squareModel.populate(768, 768)
   }
 

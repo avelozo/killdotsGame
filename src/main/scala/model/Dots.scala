@@ -12,16 +12,21 @@ import scala.util.Random
  * @param diameter dot diameter.
  */
 case class Dot(var pos: Square, var color: Int,  diameter: Int)
-case class Square(var x: Float, var y: Float, var full: Boolean)
+
+/**
+ * A square: the position, size and occupation.
+ * @param x horizontal position.
+ * @param y vertical position.
+ * @param side size of the side.
+ * @param full occupation status.
+ */
+case class Square(var x: Float, var y: Float, var side: Float, var full: Boolean)
 
 /** A list of squares. */
 class Squares {
 
-  /** @groupdesc internal list. */
+  /** Internal list. */
   private val squares = new ListBuffer[Square]
-
-  /** @groupdesc size of the side. */
-  var side : Float = 0
 
   /** @return immutable list of squares. */
   def getSquares(): List[Square] = squares.toList
@@ -29,10 +34,11 @@ class Squares {
   /**
    * @param x horizontal position.
    * @param y vertical position.
+   * @param side size of the side.
    * @param full occupation status.
    */
-  def addSquare(x: Float, y: Float, full: Boolean): Unit = {
-    squares += Square(x, y, full)
+  def addSquare(x: Float, y: Float, side: Float, full: Boolean): Unit = {
+    squares += Square(x, y, side, full)
   }
 
   /**
@@ -42,11 +48,11 @@ class Squares {
   def populate(width: Int, height: Int): Unit = {
 
     val qntSquare : Int = 768 / 57
-    side = 768 / qntSquare
+    val side = 768 / qntSquare
 
     for (h <- 0 until qntSquare) {
       for (w <- 0 until qntSquare) {
-        addSquare(h * side, w * side, false)
+        addSquare(h * side, w * side, side, false)
       }
     }
 
@@ -65,12 +71,6 @@ object Dots {
 class Dots {
 
   private val dots = new ListBuffer[Dot]
-
-  var squareModel : Squares = null
-
-  /** @param model set the square model. */
-  def setSquareModel(model: Squares) = squareModel = model
-
   private var dotsChangeListener: Dots.DotsChangeListener = _
 
   /** @param l set the change listener. */
@@ -98,9 +98,9 @@ class Dots {
   }
 
   private def findDot(dot:Dot, xpress:Float, ypress: Float, colorPress: Int, diameterPress: Int): Unit ={
-    if((dot.pos.x + squareModel.side > xpress) &&
+    if((dot.pos.x + dot.pos.side > xpress) &&
       (dot.pos.x < xpress) &&
-      (dot.pos.y + squareModel.side > ypress) &&
+      (dot.pos.y + dot.pos.side > ypress) &&
       (dot.pos.y < ypress)){
       dot.pos.full = false
       dots -= Dot(dot.pos, colorPress, diameterPress)
@@ -127,8 +127,8 @@ class Dots {
 
       listSquares.foreach(square => {
         if (!square.full &&
-          (Math.abs(square.x - dot.pos.x) <= squareModel.side) &&
-          (Math.abs(square.y - dot.pos.y) <= squareModel.side)) {
+          (Math.abs(square.x - dot.pos.x) <= dot.pos.side) &&
+          (Math.abs(square.y - dot.pos.y) <= dot.pos.side)) {
           possibleMoves += square
         }
       })
