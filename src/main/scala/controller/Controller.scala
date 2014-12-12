@@ -80,12 +80,6 @@ trait Controller extends Activity with TypedActivityHolder {
       }
     })
 
-    dotModel.setLevelChangeListener(new Dots.LevelChangeListener {
-      def onLevelChange(level: Int) = {
-        findView(TR.text1).setText("Level: " + level.toString)
-      }
-    })
-
     dotModel.setScoreChangeListener(new Dots.ScoreChangeListener {
       def onScoreChange(score: Int) = {
         findView(TR.text2).setText("Score: " + score.toString)
