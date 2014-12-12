@@ -2,6 +2,7 @@ package edu.luc.etl.cs313.scala.uidemo
 
 import android.app.Activity
 import android.os.{AsyncTask, Bundle}
+import android.view.View
 import edu.luc.etl.cs313.scala.uidemo.controller._
 import edu.luc.etl.cs313.scala.uidemo.model._
 
@@ -25,17 +26,14 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onStart() = {
     super.onStart()
-    dotGenerator = new DotGenerator(dotModel, this, 1)
-    dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterChanger = new MonsterChanger(dotModel, this, 1)
-    monsterChanger.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterMover = new MonsterMover(dotModel, this, 1)
-    monsterMover.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+
+    findView(TR.button1).setOnClickListener(new View.OnClickListener {
+      override def onClick(v: View) = onClickStart()
+    })
   }
 
   override def onResume() = {
     super.onResume()
-    squareModel.populate(768, 768)
   }
 
   override def onStop() = {
@@ -47,4 +45,18 @@ class MainActivity extends Activity with TypedActivity with Controller {
     monsterMover = null
     super.onStop()
   }
+
+  def onClickStart(): Unit = {
+    findView(TR.button1).setEnabled(false)
+
+    dotGenerator = new DotGenerator(dotModel, this, 0)
+    dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+    monsterChanger = new MonsterChanger(dotModel, this, 0)
+    monsterChanger.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+    monsterMover = new MonsterMover(dotModel, this, 0)
+    monsterMover.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
+
+    squareModel.populate(dotView.getHeight, dotView.getWidth)
+  }
+
 }

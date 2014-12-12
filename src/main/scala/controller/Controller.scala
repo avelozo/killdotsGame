@@ -17,7 +17,7 @@ trait Controller extends Activity with TypedActivityHolder {
   val dotModel: Dots
   val squareModel: Squares
 
-  private var dotView: DotView = _
+  var dotView: DotView = _
 
   // TODO consider using State pattern
 
@@ -65,9 +65,6 @@ trait Controller extends Activity with TypedActivityHolder {
         false
     })
 
-    findView(TR.button1).setOnClickListener(new View.OnClickListener {
-      override def onClick(v: View) = makeDot(dotModel, Color.RED)
-    })
     findView(TR.button2).setOnClickListener(new View.OnClickListener {
       override def onClick(v: View) = makeDot(dotModel, Color.GREEN)
     })
@@ -77,15 +74,21 @@ trait Controller extends Activity with TypedActivityHolder {
     dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
       def onDotsChange(dots: Dots) = {
         val d = dots.getLastDot
-        findView(TR.text1).setText(if (null == d) "" else "")
+        //findView(TR.text1).setText(if (null == d) "" else "")
         //findView(TR.text2).setText(if (null == d) "" else "") //d.y.toString)
         dotView.invalidate()
       }
     })
 
+    dotModel.setLevelChangeListener(new Dots.LevelChangeListener {
+      def onLevelChange(level: Int) = {
+        findView(TR.text1).setText("Level: " + level.toString)
+      }
+    })
+
     dotModel.setScoreChangeListener(new Dots.ScoreChangeListener {
       def onScoreChange(score: Int) = {
-        findView(TR.text2).setText("Score: " + score.toString) //d.y.toString)
+        findView(TR.text2).setText("Score: " + score.toString)
       }
     })
   }
