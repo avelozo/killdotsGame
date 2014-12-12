@@ -1,10 +1,13 @@
 package edu.luc.etl.cs313.scala.uidemo
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.{AsyncTask, Bundle}
 import android.view.View
 import edu.luc.etl.cs313.scala.uidemo.controller._
 import edu.luc.etl.cs313.scala.uidemo.model._
+
+import scala.util.Random
 
 /** Main activity for Android UI demo program. Responsible for Android lifecycle. */
 class MainActivity extends Activity with TypedActivity with Controller {
@@ -26,6 +29,21 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   override def onStart() = {
     super.onStart()
+
+    dotModel.setLevelChangeListener(new Dots.LevelChangeListener {
+      def onLevelChange(level: Int) = {
+        findView(TR.text1).setText("Level: " + level.toString)
+
+        monsterChanger.delay = ChangeInterval(level)
+        monsterMover.delay = MoveInterval(level)
+
+        for (x <- 1 to MonstersQuantity(level))
+          if (Random.nextBoolean())
+            makeDot(dotModel, Color.YELLOW) // this method runs on the UI thread!
+          else
+            makeDot(dotModel, Color.GREEN) // this method runs on the UI thread!
+      }
+    })
 
     findView(TR.button1).setOnClickListener(new View.OnClickListener {
       override def onClick(v: View) = onClickStart()
@@ -51,9 +69,9 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
     dotGenerator = new DotGenerator(dotModel, this, 0)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterChanger = new MonsterChanger(dotModel, this, 0)
+    monsterChanger = new MonsterChanger(dotModel, this)
     monsterChanger.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
-    monsterMover = new MonsterMover(dotModel, this, 0)
+    monsterMover = new MonsterMover(dotModel, this)
     monsterMover.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
 
     squareModel.populate(dotView.getHeight, dotView.getWidth)

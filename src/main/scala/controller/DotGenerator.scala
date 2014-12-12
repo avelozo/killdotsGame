@@ -28,8 +28,10 @@ class DotGenerator(dots: Dots, controller: Controller, level: Int)
   }
 }
 
-class MonsterChanger(dots: Dots, controller: Controller, level: Int)
+class MonsterChanger(dots: Dots, controller: Controller)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
+
+  var delay = ChangeInterval(0)
 
   override protected def onProgressUpdate(values: AnyRef*) = {
     controller.changeDot(dots) // this method runs on the UI thread!
@@ -38,15 +40,17 @@ class MonsterChanger(dots: Dots, controller: Controller, level: Int)
   override protected def doInBackground(params: AnyRef*): AnyRef = {
     while (! isCancelled) {
       Log.d(TAG, "monster changer scheduling monster change of state")
-      try { Thread.sleep(ChangeInterval(level)) } catch { case _: InterruptedException => return null }
+      try { Thread.sleep(delay) } catch { case _: InterruptedException => return null }
       publishProgress(null)
     }
     null
   }
 }
 
-class MonsterMover(dots: Dots, controller: Controller, level: Int)
+class MonsterMover(dots: Dots, controller: Controller)
   extends AsyncTask[AnyRef, AnyRef, AnyRef] {
+
+  var delay = MoveInterval(0)
 
   override protected def onProgressUpdate(values: AnyRef*) = {
     controller.moveDot(dots) // this method runs on the UI thread!
@@ -55,7 +59,7 @@ class MonsterMover(dots: Dots, controller: Controller, level: Int)
   override protected def doInBackground(params: AnyRef*): AnyRef = {
     while (! isCancelled) {
       Log.d(TAG, "monster mover scheduling monster movement")
-      try { Thread.sleep(MoveInterval(level)) } catch { case _: InterruptedException => return null }
+      try { Thread.sleep(delay) } catch { case _: InterruptedException => return null }
       publishProgress(null)
     }
     null

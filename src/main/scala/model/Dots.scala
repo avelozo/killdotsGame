@@ -129,7 +129,10 @@ class Dots {
         notifyScoreListener()
 
         if (dots.length == 0) {
-          level += 1
+          if (level < 7)
+            level += 1
+          else
+            level = 0
           notifyLevelListener()
         }
       }
