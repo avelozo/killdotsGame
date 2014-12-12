@@ -47,11 +47,12 @@ class Squares {
    */
   def populate(width: Int, height: Int): Unit = {
 
-    val qntSquare : Int = 768 / 57
-    val side = 768 / qntSquare
+    val wqntSquare : Int = width / 57
+    val hqntSquare : Int = height / 57
+    val side = width / wqntSquare
 
-    for (h <- 0 until qntSquare) {
-      for (w <- 0 until qntSquare) {
+    for (h <- 0 until hqntSquare) {
+      for (w <- 0 until wqntSquare) {
         addSquare(h * side, w * side, side, false)
       }
     }
@@ -126,6 +127,11 @@ class Dots {
         dot.pos.full = false
         score += 1
         notifyScoreListener()
+
+        if (dots.length == 0) {
+          level += 1
+          notifyLevelListener()
+        }
       }
     }
   }
