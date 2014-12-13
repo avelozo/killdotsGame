@@ -66,6 +66,8 @@ class MainActivity extends Activity with TypedActivity with Controller {
 
   def onClickStart(): Unit = {
     findView(TR.button1).setEnabled(false)
+    findView(TR.text1).setText("Level: 0")
+    findView(TR.text2).setText("Score: 0")
 
     dotGenerator = new DotGenerator(dotModel, this, 0)
     dotGenerator.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null)
