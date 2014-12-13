@@ -2,9 +2,7 @@ package edu.luc.etl.cs313.scala.uidemo
 package controller
 
 import android.app.Activity
-import android.graphics.Color
-import android.view.View.OnKeyListener
-import android.view.{KeyEvent, Menu, MenuItem, View}
+import android.view.{Menu, MenuItem, View}
 import edu.luc.etl.cs313.scala.uidemo.model.{Dots, Square, Squares}
 import edu.luc.etl.cs313.scala.uidemo.view.DotView
 
@@ -43,8 +41,8 @@ trait Controller extends Activity with TypedActivityHolder {
   }
 
   override def onOptionsItemSelected(item: MenuItem) = item.getItemId match {
-    case R.id.menu_clear => dotModel.clearDots() ; true
-    case R.id.menu_toggleView => toggleView() ; true
+    //case R.id.menu_clear => dotModel.clearDots() ; true
+    //case R.id.menu_toggleView => toggleView() ; true
     case _ => super.onOptionsItemSelected(item)
   }
 
@@ -53,29 +51,11 @@ trait Controller extends Activity with TypedActivityHolder {
 
     dotView.setDots(dotModel)
     dotView.setOnTouchListener(new TrackingTouchListener(dotModel))
-    dotView.setOnKeyListener(new OnKeyListener {
-      override def onKey(v: View, keyCode: Int, event: KeyEvent): Boolean =
-      if (KeyEvent.ACTION_DOWN == event.getAction)
-        keyCode match {
-          case KeyEvent.KEYCODE_SPACE => makeDot(dotModel, Color.MAGENTA); true
-          case KeyEvent.KEYCODE_ENTER => makeDot(dotModel, Color.BLUE); true
-          case _ => false
-        }
-      else
-        false
-    })
-
-    findView(TR.button2).setOnClickListener(new View.OnClickListener {
-      override def onClick(v: View) = makeDot(dotModel, Color.GREEN)
-    })
 
     // This listener provides a tiny bit of mediation from model to view.
     // Conceptually, it represents the dashed arrow (events) from model to view.
     dotModel.setDotsChangeListener(new Dots.DotsChangeListener {
       def onDotsChange(dots: Dots) = {
-        val d = dots.getLastDot
-        //findView(TR.text1).setText(if (null == d) "" else "")
-        //findView(TR.text2).setText(if (null == d) "" else "") //d.y.toString)
         dotView.invalidate()
       }
     })
